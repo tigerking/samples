@@ -40,4 +40,12 @@
             android:label="@string/label_create_gesture" />
 
     </application>
+    
+    <supports-screens 
+                  android:smallScreens="true"
+                  android:normalScreens="true" 
+                  android:largeScreens="true" 
+                  android:xlargeScreens="true" 
+                  android:anyDensity="true"/>
+    
 </manifest>
