@@ -2,6 +2,7 @@ package com.tiger.gesture.demo;
 
 import com.tiger.gesture.demo.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.gesture.Gesture;
@@ -11,10 +12,12 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 public class GestureDemoActivity extends Activity implements OnGesturePerformedListener{
 	
+	final static String LOG_TAG="GestureDemoActivity";
 	
 	GestureLibrary mLibrary;
 	
@@ -28,7 +31,14 @@ public class GestureDemoActivity extends Activity implements OnGesturePerformedL
         GestureOverlayView gestures=(GestureOverlayView)findViewById(R.id.gestures);
         gestures.addOnGesturePerformedListener(this);
 
-        mLibrary=GestureLibraries.fromRawResource(this,R.raw.gestures);
+        File file = new File("/mnt/sdcard/gestures");
+        if(file.exists()) {
+        	Log.d(LOG_TAG, "load gestures from " + file.getAbsolutePath());
+        	mLibrary=GestureLibraries.fromFile(file);
+        }else{
+        	Log.d(LOG_TAG,"load gestures from raw/gestures");
+        	mLibrary=GestureLibraries.fromRawResource(this,R.raw.gestures);
+        }
         
         if(!mLibrary.load()) {
         	finish();
